@@ -1,6 +1,8 @@
 package com.xiaobai.Controller;
 
+import com.xiaobai.model.ServerSettings;
 import com.xiaobai.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,12 +65,15 @@ public class GetController {
      * @return
      */
     @GetMapping(value = "/v1/page_user2")
-    public Object pageUserV2(@RequestParam(defaultValue = "0", name = "page") int from,
+    public Object pageUserV2(@RequestParam(defaultValue = "1", name = "page") int from,
                              @RequestParam(defaultValue = "10", name = "size") int size) {
         params.clear();
 
         params.put("from", from);
         params.put("size", size);
+        params.put("num", 100);
+        System.out.println("123");
+
 
         return params;
     }
@@ -76,7 +81,8 @@ public class GetController {
     /**
      * 功能描述：bean对象传参
      * 注意：1、注意需要指定http头为 content-type为application/json
-     * 		2、使用body传输数据
+     * 2、使用body传输数据
+     *
      * @param user
      * @return
      */
@@ -92,6 +98,7 @@ public class GetController {
 
     /**
      * 功能描述：测试获取http头信息
+     *
      * @param access_token
      * @param id
      * @return
@@ -120,6 +127,16 @@ public class GetController {
         params.put("id", id);
 
         return params;
+    }
+
+    @Autowired
+    private ServerSettings serverSettings;
+
+    @GetMapping(value = "/v1/test_properties")
+    public Object testPeroperties() {
+
+
+        return serverSettings;
     }
 
 }

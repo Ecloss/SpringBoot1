@@ -1,6 +1,8 @@
 package com.xiaobai.Controller;
 
 import com.xiaobai.model.JsonData;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import java.util.UUID;
  * @date 2019/5/7 10:14
  */
 @Controller
+@PropertySource({"classpath:application.properties"})
 public class FileController {
 
     @RequestMapping(value = "/api/v1/gopage")
@@ -26,7 +29,14 @@ public class FileController {
         return "index";
     }
 
-    public static final String filePath = "E:\\003_Code\\SpringBoot\\SpringBoot1\\src\\main\\resource\\static\\images";
+    @Value("${web.file.path}")
+    private String filePath;
+
+    @RequestMapping(value = "/print")
+    @ResponseBody
+    public JsonData printfResources() {
+        return new JsonData(0, "成功", filePath);
+    }
 
     @RequestMapping(value = "upload")
     @ResponseBody
@@ -38,7 +48,7 @@ public class FileController {
         if (file.getSize() > 1024 * 1024) {
             return new JsonData(-1, "文件太大！", null);
         }
-        String name  = request.getParameter("name");
+        String name = request.getParameter("name");
         System.out.println("用户名：" + name);
 
         String fileName = file.getOriginalFilename();
@@ -49,7 +59,7 @@ public class FileController {
 
         // 文件上传后的路径
         fileName = UUID.randomUUID() + suffixName;
-        System.out.println("转换后的名称:"+fileName);
+        System.out.println("转换后的名称:" + fileName);
 
         File dest = new File(filePath + fileName);
 
