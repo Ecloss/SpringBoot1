@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.MultipartConfigElement;
@@ -15,6 +17,8 @@ import javax.servlet.MultipartConfigElement;
  * @date 2019/5/6 16:46
  */
 @SpringBootApplication
+@EnableScheduling       // 开启定时任务功能
+@EnableAsync    // 开启异步任务
 public class XdclassApplication {
 
     public static void main(String[] args) {

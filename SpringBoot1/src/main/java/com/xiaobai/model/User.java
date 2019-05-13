@@ -1,47 +1,28 @@
 package com.xiaobai.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
-import java.util.Date;
+import java.io.Serializable;
 
 /**
- * 用户类
+ * 用户
  *
  * @author 余修文
- * @date 2019/5/6 18:13
+ * @date 2019/5/8 22:22
  */
 @Data
-public class User {
+public class User implements Serializable {
 
-    private Integer ID;
+    private Integer userId;
 
     private String name;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer age;
+    private String password;
 
-    @JsonIgnore
-    private String pwd;
+    private String salt;
 
-    @JsonProperty("account")
-    private String phone;
+    private Integer state;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", locale = "zh", timezone = "GMT+8")
-    private Date createTime;
+    private String createTime;
 
-    public User(Integer ID, String name, Integer age, String pwd, String phone, Date createTime) {
-        this.ID = ID;
-        this.name = name;
-        this.age = age;
-        this.pwd = pwd;
-        this.phone = phone;
-        this.createTime = createTime;
-    }
-
-    public User() {
-    }
 }
